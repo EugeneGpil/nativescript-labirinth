@@ -1,43 +1,34 @@
 <template>
-  <Page>
-    <ActionBar>
-      <Label text="Home"/>
-    </ActionBar>
-
+  <Page actionBarHidden="true">
     <GridLayout>
-      <Label class="info">
-        <FormattedString>
-          <Span class="fas" text.decode="&#xf135; "/>
-          <Span :text="message"/>
-        </FormattedString>
-      </Label>
+      <Canvas id="canvas" width="100%" height="100%" @ready="doCanvasStart"/>
     </GridLayout>
   </Page>
 </template>
 
 <script lang="ts">
-  import Vue from "nativescript-vue";
+import Vue from 'nativescript-vue'
+import App from '~/classes/app'
 
-  export default Vue.extend({
-    computed: {
-      message() {
-        return "Blank {N}-Vue app";
-      }
+export default Vue.extend({
+  data() {
+    return {
+      canvas: null,
+      ctx: null
     }
-  });
+  },
+
+  methods: {
+    doCanvasStart(args: any) {
+      this.canvas = args.object
+      this.ctx = (this.canvas as any).getContext('2d') as any
+      (this.ctx as any).fillStyle = 'green';
+      (this.ctx as any).fillRect(10, 10, 150, 100)
+    }
+  },
+
+  mounted() {
+    App.setImmersiveMode()
+  },
+})
 </script>
-
-<style scoped lang="scss">
-  @import '@nativescript/theme/scss/variables/blue';
-
-  // Custom styles
-  .fas {
-    @include colorize($color: accent);
-  }
-
-  .info {
-    font-size: 20;
-    horizontal-align: center;
-    vertical-align: center;
-  }
-</style>

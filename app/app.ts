@@ -9,3 +9,5 @@ Vue.config.silent = !__DEV__
 new Vue({
   render: (h) => h('frame', [h(Home)]),
 }).$start()
+
+Vue.registerElement('Canvas', () => require('@nativescript/canvas').Canvas)
